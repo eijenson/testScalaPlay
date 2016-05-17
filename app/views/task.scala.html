@@ -1,19 +1,21 @@
-@(taskForm: Form[controllers.Task],taskList:List[controllers.Task])
+@(tasks:Seq[models.Task])
 @import helper._
 @import play.api.Play.current
 @import play.api.i18n.Messages.Implicits._
 
-@template("タスク表") {
+@template("taskList") {
 	@helper.form(action = routes.Application.taskSubmit) {
-    	@helper.inputText(taskForm("name"))
-    	@helper.inputText(taskForm("ticket"))
+		<input name="id" type="hidden" >
+    	 <input name="name" type="text">
+    	 <input name="ticket" type="text">
     	<input type="submit">
     }
-    @if(!taskList.isEmpty){
+    @if(!tasks.isEmpty){
     	<table>
     		<tbody>
-    			@for(task <- taskList){
+    			@for(task <- tasks){
     				<tr>
+    				<td>@task.id</td>
     				<td>@task.name</td>
     				<td>@task.ticket</td>
     				</tr>

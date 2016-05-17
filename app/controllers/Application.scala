@@ -4,8 +4,12 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
+import javax.inject.Inject
+import dao.TaskDao
+import models.Task
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
-class Application extends Controller {
+class Application @Inject()(taskDao: TaskDao) extends Controller {
 
   var accessNum:Integer = 0
   
@@ -19,22 +23,22 @@ class Application extends Controller {
   }
   var taskForm = Form(
     mapping(
+      "id"   -> number,
       "name" -> text,
-      "ticket" -> text)(Task.apply)(Task.unapply))
+      "ticket" -> text)(models.Task.apply)(models.Task.unapply))
   
-  val defaultTask = Task("","")
-  var DBtaskList:List[Task] = List(defaultTask)
-  
-  def task = Action{
-    Ok(views.html.task(taskForm ,DBtaskList))
+      
+      
+      
+      
+
+  def task = Action.async{
+    taskDao.all().map{case tasks => Ok(views.html.task(tasks))}
   }
   
-  def taskSubmit = Action{ implicit request =>
-    val task = taskForm.bindFromRequest.get
-    var taskList:List[Task] = DBtaskList :+ task
-    DBtaskList = taskList
-    Ok(views.html.task(taskForm,taskList))
+  def taskSubmit = Action.async{ implicit request =>
+    val task : models.Task = taskForm.bindFromRequest.get
+    //Ok(views.html.task(taskForm,taskList))
+    taskDao.insert(task).map(_  => Redirect(routes.Application.task))
   }
 }
-
-case class Task(name:String , ticket:String)
