@@ -7,6 +7,8 @@ GET     /                           controllers.Application.index
 GET     /randam						controllers.Application.randam
 GET		/task						controllers.Application.task
 POST	/task						controllers.Application.taskSubmit
+POST	/taskDelete					controllers.Application.taskDelete
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

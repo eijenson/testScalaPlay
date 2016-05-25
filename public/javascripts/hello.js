@@ -7,7 +7,7 @@ function getRandom() {
 }
 
 window.onload= function(){
-var id = document.getElementsByName("id")[0];
+var id = document.getElementById("newTaskID");
 var val = getRandom();
 id.value = val;
 }
