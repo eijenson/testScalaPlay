@@ -4,12 +4,10 @@
 @import play.api.i18n.Messages.Implicits._
 
 @template("taskList") {
-	@helper.form(action = routes.Application.taskSubmit) {
-		<input id="newTaskID" name="id" type="hidden" >
-    	 <input name="name" type="text">
-    	 <input name="ticket" type="text">
-    	<input type="submit">
-    }
+		<input id="addTaskId" name="id" type="hidden" >
+    	<input id="addTaskName" name="name" type="text">
+    	<input id="addTaskTicket" name="ticket" type="text">
+    	<input id="addTaskSubmit" type="submit">
     @if(!tasks.isEmpty){
     	<table>
     		<tbody>
