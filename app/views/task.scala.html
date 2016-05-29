@@ -4,26 +4,17 @@
 @import play.api.i18n.Messages.Implicits._
 
 @template("taskList") {
-		<input id="addTaskId" name="id" type="hidden" >
-    	<input id="addTaskName" name="name" type="text">
-    	<input id="addTaskTicket" name="ticket" type="text">
-    	<input id="addTaskSubmit" type="submit">
-    @if(!tasks.isEmpty){
-    	<table>
-    		<tbody>
-    			@for(task <- tasks){
-    				<tr>
-    				<td>@task.name</td>
-    				<td>@task.ticket</td>
-    				<td>
-    				@helper.form(action = routes.Application.taskDelete) {
-    					<input name="id" type="hidden" value="@task.id">
-    					<input type="submit" value="削除">
-    					}
-    				</td>
-    				</tr>
-    			}
-    		</tbody>
-    	</table>
-    }
+	<input id="addTaskId" name="id" type="hidden" >
+    <input id="addTaskName" name="name" type="text">
+    <input id="addTaskTicket" name="ticket" type="text">
+    <input id="addTaskSubmit" type="submit">
+    <table>
+    	<tbody id="ticketTable">
+    	@if(!tasks.isEmpty){
+    		@for(task <- tasks){
+    			@taskTable(task)
+    		}
+    	}
+    	</tbody>
+    </table>
 }

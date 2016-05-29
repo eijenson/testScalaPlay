@@ -17,10 +17,16 @@ class TaskDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) 
 
   private val Tasks = TableQuery[TaskTable]
 
+  //全てのタスクをリストで返す
   def all(): Future[Seq[Task]] = db.run(Tasks.result)
 
-  def insert(task: Task): Future[Unit] = db.run(Tasks += task).map {_ => ()}
+  //IDを元にタスクを取得する
+  def findByid(id:Int): Future[Option[Task]] = db.run(Tasks.filter(_.id === id).result.headOption)
+  
+  //タスクを追加する
+  def insert(task: Task) = db.run(Tasks += task)
 
+  //IDを元にタスクを削除する
   def delete(id:Int): Future[Int] = db.run(Tasks.filter(_.id === id).delete)
   
   private class TaskTable(tag: Tag) extends Table[Task](tag, "task") {
@@ -29,6 +35,6 @@ class TaskDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) 
     def name = column[String]("name")
     def ticket = column[String]("ticket")
 
-    def * = (id, name , ticket) <> (Task.tupled, Task.unapply _)
+    def * = (id, name , ticket) <> (Task.tupled, Task.unapply)
   }
 }

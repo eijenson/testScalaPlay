@@ -9,3 +9,6 @@ target
 /bin/
 /.cache-main
 /.cache-tests
+/play.h2.db
+/play.lock.db
+/play.trace.db

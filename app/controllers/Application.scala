@@ -14,7 +14,7 @@ class Application @Inject()(taskDao: TaskDao) extends Controller {
   var accessNum:Integer = 0
   
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Redirect(routes.Application.task)
   }
 
   def randam = Action{

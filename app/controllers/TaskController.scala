@@ -13,6 +13,8 @@ import akka.actor.Actor
 import models.Task
 import dao.TaskDao
 import service.TaskService
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 
 
 
@@ -26,15 +28,9 @@ class TaskController @Inject() (implicit actorSystem: ActorSystem, materializer:
       TaskSocketActor.props(out,taskService)
     }
   }
-  
-  /*def task = WebSocket.accept[Task, Result] { implicit request =>
-    ActorFlow.actorRef[Task, Result] { out =>
-      TaskSocketActor.props(out,taskService)
-    }
-  }*/
-
 }
-case class Result(result: String = "success")
+
+case class Result(result: String = "success" , data : String)
 
 object TaskSocketActor {
   def props(out: ActorRef,taskService: TaskService) = Props(new TaskSocketActor(out,taskService))
@@ -44,7 +40,9 @@ object TaskSocketActor {
 class TaskSocketActor(out: ActorRef,taskService: TaskService) extends Actor {
   def receive = {
     case task: Task =>
-      out ! Result("success")
       taskService.addTask(task)
+      val taskSeq = Await.result(taskService.getTaskById(task.id),Duration.Inf)
+      val taskJson = Json.toJson(taskSeq).toString()
+      out ! Result("success",taskJson)
   }
 }
