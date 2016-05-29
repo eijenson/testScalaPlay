@@ -5,16 +5,16 @@
 
 @template("taskList") {
 	<input id="addTaskId" name="id" type="hidden" >
-    <input id="addTaskName" name="name" type="text">
-    <input id="addTaskTicket" name="ticket" type="text">
-    <input id="addTaskSubmit" type="submit">
-    <table>
-    	<tbody id="ticketTable">
-    	@if(!tasks.isEmpty){
-    		@for(task <- tasks){
-    			@taskTable(task)
-    		}
-    	}
-    	</tbody>
-    </table>
+	<input id="addTaskName" name="name" type="text">
+	<input id="addTaskTicket" name="ticket" type="text">
+	<input id="addTaskSubmit" type="submit">
+	<table>
+		<tbody id="ticketTable">
+		@if(!tasks.isEmpty){
+			@for(task <- tasks){
+				@taskTable(task)
+			}
+		}
+		</tbody>
+	</table>
 }

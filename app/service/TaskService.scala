@@ -11,16 +11,16 @@ import scala.concurrent.duration.Duration
 import play.api.libs.json.Json
 
 @Singleton
-class TaskService  @Inject()(taskDao:TaskDao){
-  def addTask(task: Task){
-    taskDao.insert(task)
-  }
-  
-  def getAllTask() : Future[Seq[Task]] = {
-    taskDao.all()
-  }
-  
-  def getTaskById(id : Int) : Future[Option[Task]] = {
-    taskDao.findByid(id)
-  }
+class TaskService @Inject() (taskDao: TaskDao) {
+	def addTask(task: Task) {
+		taskDao.insert(task)
+	}
+
+	def getAllTask(): Future[Seq[Task]] = {
+		taskDao.all()
+	}
+
+	def getTaskById(id: Int): Future[Option[Task]] = {
+		taskDao.findByid(id)
+	}
 }
