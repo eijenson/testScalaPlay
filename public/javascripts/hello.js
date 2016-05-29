@@ -19,20 +19,22 @@ window.onload= function(){
 		console.log(sendJson)
 		socket.send(sendJson)
 	}
-}
-var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket
-var socket = new WS("ws://localhost:9000/addTask")
-socket.onopen = function(evt) {
-	console.log("start")
-}
-socket.onmessage = function(evt) { onMessage(evt) };
+	var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
+	var body = document.getElementsByTagName("body")[0];
+	//bodyタブのカスタムデータ属性からurlを取得する
+	var socket = new WS(body.dataset.wsUrl);
+		socket.onopen = function(evt) {
+		console.log("start");
+	}
+	socket.onmessage = function(evt) { onMessage(evt) };
 
-function onMessage(evt) {
-	var json = JSON.parse(evt.data)
-	var data = JSON.parse(json.data)
-	console.log(data);
-	addRowTaskTable(data);
-	//socket.close();
+	function onMessage(evt) {
+		var json = JSON.parse(evt.data);
+		var data = JSON.parse(json.data);
+		console.log(data);
+		addRowTaskTable(data);
+		//socket.close();
+	}
 }
 
 /*

@@ -1,6 +1,6 @@
 package controllers
 
-import javax.inject.Inject
+import javax.inject._
 import akka.actor.ActorSystem
 import akka.stream.Materializer
 import play.api.mvc._
@@ -15,7 +15,9 @@ import service.TaskService
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import play.api.libs.json.Json
+import play.api.mvc.Call
 
+@Singleton
 class TaskController @Inject() (implicit actorSystem: ActorSystem, materializer: Materializer, taskService: TaskService) extends Controller {
 	implicit val inEventFormat = Json.format[Task]
 	implicit val outEventFormat = Json.format[Result]

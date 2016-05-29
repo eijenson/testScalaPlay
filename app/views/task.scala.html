@@ -1,4 +1,4 @@
-@(tasks:Seq[models.Task])
+@(tasks:Seq[models.Task])(implicit r: Request[_])
 @import helper._
 @import play.api.Play.current
 @import play.api.i18n.Messages.Implicits._

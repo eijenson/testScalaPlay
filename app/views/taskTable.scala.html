@@ -1,4 +1,4 @@
-@(task:models.Task)
+@(task:models.Task)(implicit r: Request[_])
 
 <tr>
 	<td id="name">@task.name</td>

@@ -18,7 +18,7 @@ class Application @Inject() (taskDao: TaskDao) extends Controller {
 		Redirect(routes.Application.task)
 	}
 
-	def randam = Action {
+	def randam = Action { implicit request =>
 		accessNum += 1
 		Ok(views.html.randam("回数" + accessNum))
 	}
@@ -30,7 +30,7 @@ class Application @Inject() (taskDao: TaskDao) extends Controller {
 
 	var deleteIdForm = Form("id" -> number)
 
-	def task = Action.async {
+	def task = Action.async { implicit request =>
 		taskDao.all().map { case tasks => Ok(views.html.task(tasks)) }
 	}
 
