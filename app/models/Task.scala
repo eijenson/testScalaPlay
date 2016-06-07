@@ -6,7 +6,8 @@ import play.api.libs.functional.syntax._
 case class Task(
 	id: Int,
 	name: String,
-	ticket: String)
+	ticket: String
+)
 
 object Task {
 	implicit def jsonWrites = Json.writes[Task]

@@ -23,4 +23,8 @@ class TaskService @Inject() (taskDao: TaskDao) {
 	def getTaskById(id: Int): Future[Option[Task]] = {
 		taskDao.findByid(id)
 	}
+	
+	def removeTaskById(id: Int) : Future[Int] = {
+		taskDao.delete(id)
+	}
 }
