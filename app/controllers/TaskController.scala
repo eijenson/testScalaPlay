@@ -34,4 +34,4 @@ class TaskController @Inject() (implicit actorSystem: ActorSystem, materializer:
 	}
 }
 
-case class Result(result: String = "success",mode:String, data: String)
+case class Result(result:Boolean,mode:String, data: String)

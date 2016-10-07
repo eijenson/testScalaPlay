@@ -16,13 +16,13 @@ class TaskActor(out: ActorRef, taskService: TaskService) extends Actor {
 	def receive = {
 		case taskForm:TaskForm => taskForm.mode match{
 			case "add" =>
-				out ! Result("success",taskForm.mode, add(TaskForm.mappingTask(taskForm)));
+				out ! Result(true,taskForm.mode, add(TaskForm.mappingTask(taskForm)));
 			case "remove" =>
 				val deleteId = remove(taskForm.id)
-				out ! Result("success",taskForm.mode, String.valueOf(deleteId));
+				out ! Result(true,taskForm.mode, String.valueOf(deleteId));
 		}
 		case _ => 
-			out ! Result("failure","","")
+			out ! Result(false,"","")
 	}
 	def add(task:Task) = {
 		taskService.addTask(task)
