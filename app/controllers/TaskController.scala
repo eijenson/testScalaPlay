@@ -12,6 +12,7 @@ import play.api.libs.json.Json
 import play.api.libs.streams.ActorFlow
 import play.api.mvc._
 import play.api.mvc.WebSocket.MessageFlowTransformer
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import service.TaskService
 import akka.actor.ActorSystem
 import forms.TaskForm
@@ -21,6 +22,10 @@ class TaskController @Inject() (implicit actorSystem: ActorSystem, materializer:
 	implicit val inEventFormat = Json.format[TaskForm]
 	implicit val outEventFormat = Json.format[Result]
 	implicit val messageFlowTransformer = MessageFlowTransformer.jsonMessageFlowTransformer[TaskForm, Result]
+	
+	def task = Action.async { implicit request =>
+		taskService.getAllTask().map { case tasks => Ok(views.html.task(tasks)) }
+	}
 	
 	def wsTask = WebSocket.accept[TaskForm, Result] { request =>
 		ActorFlow.actorRef[TaskForm, Result] { out =>
