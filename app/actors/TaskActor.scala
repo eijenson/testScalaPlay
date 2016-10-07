@@ -18,8 +18,8 @@ class TaskActor(out: ActorRef, taskService: TaskService) extends Actor {
 			case "add" =>
 				out ! Result("success",taskForm.mode, add(TaskForm.mappingTask(taskForm)));
 			case "remove" =>
-				remove(taskForm.id)
-				out ! Result("success",taskForm.mode, String.valueOf(taskForm.id));
+				val deleteId = remove(taskForm.id)
+				out ! Result("success",taskForm.mode, String.valueOf(deleteId));
 		}
 		case _ => 
 			out ! Result("failure","","")
