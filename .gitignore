@@ -12,3 +12,4 @@ target
 /play.h2.db
 /play.lock.db
 /play.trace.db
+/data/

@@ -24,5 +24,7 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 routesGenerator := InjectedRoutesGenerator
 
 libraryDependencies += "com.typesafe.play" %% "play-slick" % "3.0.0"
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.8"
+libraryDependencies += "com.typesafe.play" %% "play-json-joda" % "2.6.8"
 
 enablePlugins(DockerPlugin)
